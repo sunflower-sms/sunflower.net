@@ -3,7 +3,9 @@ name: sunflower-sms
 services:
   db:
     image: mysql:lts
-    container_name: mysql-data
+    container_name: mysql-db
+    ports:
+      - "3306:3306"
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
@@ -11,13 +13,15 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: secret
     volumes:
-      - sunflower_data:/var/lib/mysql
+      - sunflower-data:/var/lib/mysql
     networks:
       - sf-network
 
 networks:
   sf-network:
+    name: sf-network
     driver: bridge
 
 volumes:
-  sunflower_data:
+  sunflower-data:
+    name: sunflower-data
